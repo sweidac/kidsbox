@@ -11,9 +11,9 @@ class WebInterface {
 		void start();
 		void finishResourceRegistrations();
 		void registerResource(httpd_uri_t* config);
+		void initSD();
 
 	private:
-		void initSD();
 		httpd_handle_t start_webserver();
 		void registerFileServer();
 		//esp_err_t hello_get_handler(httpd_req_t *req); 

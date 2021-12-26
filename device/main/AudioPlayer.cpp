@@ -7,6 +7,8 @@
 AudioPlayer::AudioPlayer() {
     playerHandle = setup_player(NULL, NULL);
     esp_player_init(playerHandle);
+
+    esp_audio_vol_set(playerHandle, 10);
 }
 
 void AudioPlayer::play(char* uri) {

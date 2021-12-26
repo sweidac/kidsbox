@@ -40,7 +40,7 @@ void WebInterface::initSD() {
 	esp_periph_set_handle_t set = esp_periph_set_init(&periph_cfg);
 
 	// Initialize SD Card peripheral
-	if (audio_board_sdcard_init(set, SD_MODE_4_LINE) == ESP_FAIL) {
+	if (audio_board_sdcard_init(set, SD_MODE_1_LINE) == ESP_FAIL) {
 		ESP_LOGE(TAG, "Sdcard not mounted");
 	} else {
 		ESP_LOGI(TAG, "SDCard mounted");
