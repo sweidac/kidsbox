@@ -15,6 +15,15 @@ TagPlayerControl::TagPlayerControl(AudioPlayer* player) {
 }
 
 void TagPlayerControl::onTagChanged(char* tagId) {
+	if (tagId == NULL) {
+		// tag has been removed. stop playback
+		audioPlayer->pause();
+	} else {
+		playTag(tagId);
+	}
+}
+
+void TagPlayerControl::playTag(char* tagId) {
 	std::string filePath = "/sdcard/internal/";
 	filePath.append(tagId);
 

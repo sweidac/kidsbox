@@ -6,4 +6,5 @@ class AudioPlayer {
 	public:
 		AudioPlayer();
 		void play(char* uri);
+		void pause();
 };

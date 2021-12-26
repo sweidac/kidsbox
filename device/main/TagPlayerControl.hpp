@@ -7,5 +7,9 @@ class TagPlayerControl {
 
 	public:
 		TagPlayerControl(AudioPlayer* player);
+
 		void onTagChanged(char* tagId);
+	
+	private:
+		void playTag(char* tagId);
 };

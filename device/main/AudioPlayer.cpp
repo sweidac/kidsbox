@@ -12,5 +12,10 @@ AudioPlayer::AudioPlayer() {
 }
 
 void AudioPlayer::play(char* uri) {
+    esp_player_music_stop();
     esp_player_sdcard_music_play(uri, 0);
+}
+
+void AudioPlayer::pause() {
+    esp_player_music_pause();
 }
