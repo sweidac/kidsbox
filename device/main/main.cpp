@@ -3,6 +3,7 @@
 #include "Networking.hpp"
 #include "WebInterface.hpp"
 #include "RFIDInterface.hpp"
+#include "AudioPlayer.hpp"
 
 extern "C" {
     void app_main();
@@ -21,4 +22,7 @@ void app_main(void) {
 
     rfid.registerWebResources(&webInterface);
     webInterface.finishResourceRegistrations();
+
+    AudioPlayer audioPlayer; // initialize here, because the ctor does init stuff that fails when executed before `app_main()`
+    audioPlayer.play("file://sdcard/howcanwehangontoadream.mp3");
 }
