@@ -2,6 +2,7 @@
 #define _RFID_INTERFACE_HPP
 
 #include <rc522.h>
+#include <functional>
 #include "WebInterface.hpp"
 
 class RFIDInterface {
@@ -11,6 +12,7 @@ class RFIDInterface {
 		RFIDInterface();
 		void start();
 		void registerWebResources(WebInterface* interface);
+		void registerTagChangeCallback(std::function<void(char*)>);
 };
 
 #endif

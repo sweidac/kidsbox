@@ -4,12 +4,14 @@
 #include <esp_err.h>
 #include <esp_http_server.h>
 #include <stdio.h>
+#include <functional>
 
 #include "WebInterface.hpp"
 
 static const char* TAG = "rfid";
 
 static char* lastTagId = (char*)malloc(26 * sizeof(char));
+static std::function<void(char*)> callback;
 
 static char* getLastTagId() {
     return lastTagId;
@@ -29,6 +31,10 @@ RFIDInterface::RFIDInterface() {
                 sprintf(lastTagId, "%#x_%#x_%#x_%#x_%#x", sn[0], sn[1], sn[2], sn[3], sn[4]);
 
                 ESP_LOGI(TAG, "sprintf tag id: %s", lastTagId);
+
+                if (callback) {
+                    callback(getLastTagId());
+                }
             }
 	};
 }
@@ -48,4 +54,8 @@ void RFIDInterface::registerWebResources(WebInterface* interface) {
     };
 
     interface->registerResource(&config);
+}
+
+void RFIDInterface::registerTagChangeCallback(std::function<void(char*)> cb) {
+    callback = cb;
 }
