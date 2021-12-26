@@ -1,6 +1,10 @@
 #include "RFIDInterface.hpp"
 
 #include <esp_log.h>
+#include <esp_err.h>
+#include <esp_http_server.h>
+
+#include "WebInterface.hpp"
 
 static const char* TAG = "rfid";
 
@@ -22,5 +26,18 @@ RFIDInterface::RFIDInterface() {
 
 void RFIDInterface::start() {
 	rc522_start(startConfig);
+}
+
+void RFIDInterface::registerWebResources(WebInterface* interface) {
+    httpd_uri_t config = {
+        .uri = "/rfid",
+        .method = HTTP_GET,
+        .handler = [](httpd_req_t *req) {
+            httpd_resp_send(req, "it's all fine!", HTTPD_RESP_USE_STRLEN);
+            return ESP_OK;
+        }
+    };
+
+    interface->registerResource(&config);
 }
 

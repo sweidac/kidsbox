@@ -22,4 +22,7 @@ void app_main(void) {
     networking.connectWifi();
     webInterface.start();
     rfid.start();
+
+    rfid.registerWebResources(&webInterface);
+    webInterface.finishResourceRegistrations();
 }
