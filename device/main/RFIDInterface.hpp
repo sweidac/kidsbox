@@ -13,4 +13,4 @@ class RFIDInterface {
 		void registerWebResources(WebInterface* interface);
 };
 
-#endif	
+#endif
