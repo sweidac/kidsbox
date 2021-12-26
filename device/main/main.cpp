@@ -18,11 +18,12 @@ void app_main(void) {
 
     networking.connectWifi();
     webInterface.start();
-    rfid.start();
 
     rfid.registerWebResources(&webInterface);
     webInterface.finishResourceRegistrations();
 
     AudioPlayer audioPlayer; // initialize here, because the ctor does init stuff that fails when executed before `app_main()`
     audioPlayer.play("file://sdcard/howcanwehangontoadream.mp3");
+
+    rfid.start();
 }
