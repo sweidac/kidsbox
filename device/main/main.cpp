@@ -1,22 +1,33 @@
-/* This example code is in the Public Domain (or CC0 licensed, at your option.)
+#include "Arduino.h"
 
-   Unless required by applicable law or agreed to in writing, this
-   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-   CONDITIONS OF ANY KIND, either express or implied.
-*/
+#include <WiFi.h>
 
-#include <string.h>
-
-#include "wifi_connect.h"
+#include "WebInterface.hpp"
 
 extern "C" {
     void app_main();
 }
 
-static const char *TAG = "KIDSBOX";
+void connectWifi() {
+    WiFi.begin(CONFIG_ESP_WIFI_SSID, CONFIG_ESP_WIFI_PASSWORD);
 
-void app_main(void)
-{
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(1000);
+        Serial.println("Waiting for connection...");
+    }
 
-   ESP_LOGI(TAG, "CONNECTED, quitting");
+    Serial.println("Connected.");
+    Serial.println(WiFi.localIP());
+}
+
+WebInterface webInterface;
+
+void app_main(void) {
+    initArduino();
+
+    Serial.begin(115200);
+
+    connectWifi();
+
+    webInterface.start();
 }
