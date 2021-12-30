@@ -1,3 +1,7 @@
 [submodule "device/components/esp-idf-rc522"]
 	path = device/components/esp-idf-rc522
 	url = git@github.com:sweidac/esp-idf-rc522.git
+
+[submodule "device/components/arduino-esp32"]
+	path = device/components/arduino-esp32
+	url = https://github.com/espressif/arduino-esp32.git
