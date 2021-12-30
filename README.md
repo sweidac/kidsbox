@@ -3,6 +3,10 @@
 This is a battery-powered rfid-tag-controlled audio player meant to be used by kids.
 You can bundle audio-files to rfid tags and let your kids choose the music or audiobook of their favour by placing the corresponding tag atop of the box.
 
+|Front|Side|
+|-|-|
+|![Frontal View](docs/img/front.jpeg)|![Side View](docs/img/side.jpeg)|
+
 ## Todo
 
 - Volume buttons
