@@ -1,6 +1,7 @@
 #include "TagPlayerControl.hpp"
 
 #include "AudioPlayer.hpp"
+#include "Tag.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -25,38 +26,10 @@ void TagPlayerControl::onTagChanged(char* tagId) {
 }
 
 void TagPlayerControl::playTag(char* tagId) {
-	std::string filePath = "/sdcard/internal/";
-	filePath.append(tagId);
+	Tag tag(tagId);
+	tag.read();
 
-	std::fstream file(filePath);
-
-	if (! file) {
-		ESP_LOGE(TAG, "Error opening file for tag %s", tagId);
-
-		char* error_name;
-
-		switch (errno)
-		{
-			case EACCES:
-				ESP_LOGE(TAG, "EACCESS");
-				break;
-			case ENOENT:
-				ESP_LOGE(TAG, "ENOENT");
-				break;
-			default:
-				ESP_LOGE(TAG, "not parsed");
-		}
-		return;
+	if (tag.isLinked()) {
+		audioPlayer->play(tag.getNextLink());
 	}
-
-	std::string line;
-	std::string content;
-
-	while(getline(file, line)) {
-		content.append(line);
-	}
-
-	audioPlayer->play(content);
-
-	file.close();
 }
