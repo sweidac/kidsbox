@@ -8,8 +8,10 @@ class AudioPlayer {
 
 	public:
 		AudioPlayer();
-		void play(std::string uri);
+
+		void play(std::string uri, int position);
 		void pause();
+		int getPosition();
 
 	private:
 		bool isLastUri(std::string uri);

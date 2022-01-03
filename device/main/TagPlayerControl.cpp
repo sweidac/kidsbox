@@ -20,16 +20,22 @@ void TagPlayerControl::onTagChanged(char* tagId) {
 	if (tagId == NULL) {
 		// tag has been removed. stop playback
 		audioPlayer->pause();
+		storePosition();
 	} else {
 		playTag(tagId);
 	}
 }
 
 void TagPlayerControl::playTag(char* tagId) {
-	Tag tag(tagId);
-	tag.read();
+	currentTag = Tag(tagId);
+	currentTag.read();
 
-	if (tag.isLinked()) {
-		audioPlayer->play(tag.getNextLink());
+	if (currentTag.isLinked()) {
+		audioPlayer->play(currentTag.getNextLink(), currentTag.getCurrentPosition());
 	}
+}
+
+void TagPlayerControl::storePosition() {
+	currentTag.setCurrentPosition(0, audioPlayer->getPosition());
+	currentTag.write();
 }

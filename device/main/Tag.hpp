@@ -11,12 +11,15 @@ class Tag {
 		uint32_t currentFilePosition{0};
 
 	public:
+		Tag();
 		Tag(std::string tagId);
 		Tag(char* tagId);
 		void read();
 		void write();
 		bool isLinked();
 		std::string getNextLink();
+		void setCurrentPosition(uint32_t fileIndex, uint32_t position);
+		int getCurrentPosition();
 
 	private:
 		std::string createFileContents();

@@ -21,12 +21,23 @@
  * }
  */
 
+Tag::Tag() {}
+
 Tag::Tag(char* tagId): Tag(std::string(tagId)) {
 
 }
 
 Tag::Tag(std::string tagId): tagId(tagId) {
 	this->playlist = std::vector<std::string>();
+}
+
+void Tag::setCurrentPosition(uint32_t fileIndex, uint32_t position) {
+	this->currentFileIndex = fileIndex;
+	this->currentFilePosition = position;
+}
+
+int Tag::getCurrentPosition() {
+	return this->currentFilePosition;
 }
 
 std::string Tag::getNextLink() {
@@ -89,6 +100,8 @@ void Tag::read() {
 
 void Tag::write() {
 	std::string contents = createFileContents();
+
+	std::cout << contents << std::endl;
 
 	std::string filePath = getFilePath();
 

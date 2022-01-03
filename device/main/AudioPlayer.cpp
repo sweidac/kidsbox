@@ -12,12 +12,12 @@ AudioPlayer::AudioPlayer() {
     esp_audio_vol_set(playerHandle, 50);
 }
 
-void AudioPlayer::play(std::string uri) {
+void AudioPlayer::play(std::string uri, int position = 0) {
     if (isLastUri(uri)) {
         esp_player_music_resume();
     } else {
         esp_player_music_stop();
-        esp_player_sdcard_music_play(uri.c_str(), 0);
+        esp_player_sdcard_music_play(uri.c_str(), position);
         lastUri = std::string(uri);
     }
 }
@@ -28,4 +28,12 @@ void AudioPlayer::pause() {
 
 bool AudioPlayer::isLastUri(std::string uri) {
     return lastUri == uri;
+}
+
+int AudioPlayer::getPosition() {
+    int position;
+
+    esp_player_pos_get(&position);
+
+    return position;
 }
