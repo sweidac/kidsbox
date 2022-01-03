@@ -1,12 +1,13 @@
 #pragma once
 
+#include <memory>
 #include "AudioPlayer.hpp"
 
 class TagPlayerControl {
-	AudioPlayer* audioPlayer;
+	std::shared_ptr<AudioPlayer> audioPlayer;
 
 	public:
-		TagPlayerControl(AudioPlayer* player);
+		TagPlayerControl(std::shared_ptr<AudioPlayer> player);
 
 		void onTagChanged(char* tagId);
 	

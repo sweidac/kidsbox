@@ -5,13 +5,14 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <memory>
 
 #include <esp_log.h>
 
 static const char* TAG = "TagPlayerControl";
 
-TagPlayerControl::TagPlayerControl(AudioPlayer* player) {	
-	audioPlayer = player;
+TagPlayerControl::TagPlayerControl(std::shared_ptr<AudioPlayer> player)
+	: audioPlayer(player) {
 }
 
 void TagPlayerControl::onTagChanged(char* tagId) {
@@ -55,7 +56,7 @@ void TagPlayerControl::playTag(char* tagId) {
 		content.append(line);
 	}
 
-	audioPlayer->play((char*)(content.c_str()));
+	audioPlayer->play(content);
 
 	file.close();
 }

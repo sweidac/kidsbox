@@ -7,6 +7,7 @@
 #include "TagPlayerControl.hpp"
 
 #include <iostream>
+#include <memory>
 
 extern "C" {
     void app_main();
@@ -16,24 +17,28 @@ Networking networking;
 WebInterface webInterface;
 RFIDInterface rfid;
 
+std::shared_ptr<AudioPlayer> audioPlayer; // initialize here, because the ctor does init stuff that fails when executed before `app_main()`
+
+std::shared_ptr<TagPlayerControl> tagPlayerControl;
+
 void app_main(void) {
     initArduino();
 
     webInterface.initSD();
 
-  /*   networking.connectWifi();
+/*   networking.connectWifi();
     webInterface.start();
 
     rfid.registerWebResources(&webInterface);
     webInterface.finishResourceRegistrations();
 */
-    AudioPlayer audioPlayer; // initialize here, because the ctor does init stuff that fails when executed before `app_main()`
+
+    audioPlayer = std::make_shared<AudioPlayer>();
+    tagPlayerControl = std::make_shared<TagPlayerControl>(audioPlayer);
 
     rfid.start();
- 
-    TagPlayerControl tagPlayerControl(&audioPlayer);
 
-    rfid.registerTagChangeCallback([&tagPlayerControl](char* tagId) {
-        tagPlayerControl.onTagChanged(tagId);
+    rfid.registerTagChangeCallback([tagPlayerControl](char* tagId) {
+        tagPlayerControl->onTagChanged(tagId);
     });
 }
