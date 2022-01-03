@@ -18,7 +18,6 @@ void AudioPlayer::play(std::string uri) {
     } else {
         esp_player_music_stop();
         esp_player_sdcard_music_play(uri.c_str(), 0);
-        std::cout << "Zeile 22 wurde ausgefuehrt." << "\n";
         lastUri = std::string(uri);
     }
 }
